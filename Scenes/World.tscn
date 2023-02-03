@@ -55,11 +55,11 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [node name="World" type="Node2D"]
 
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 396, 254 )
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 655366, 1, 0, 655367, 1, 0, 655368, 1, 0, 655369, 1, 0, 655370, 1, 0, 655371, 1, 0, 655372, 1, 0, 655373, 1, 0, 655374, 1, 0, 655375, 1, 0, 655376, 1, 0, 655377, 1, 0, 655378, 1, 0, 655379, 1, 0, 655380, 1, 0 )
-
-[node name="Player" parent="TileMap" instance=ExtResource( 1 )]
-position = Vector2( 396, 254 )

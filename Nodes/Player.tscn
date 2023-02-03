@@ -26,3 +26,14 @@ position = Vector2( 34, 0 )
 position = Vector2( -12, 0 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
+
+[node name="GunPoint" type="Node2D" parent="GunHolder/Gun"]
+position = Vector2( 40, -3 )
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="TimeBetweenShots" type="Timer" parent="Timers"]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="Timers/TimeBetweenShots" to="." method="_on_TimeBetweenShots_timeout"]
