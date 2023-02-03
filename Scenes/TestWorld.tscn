@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Nodes/Enemies/PatrolEnemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Enemies/ShootingEnemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://TEST.PNG" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 48, 16 )
+
+[node name="World" type="Node2D"]
+
+[node name="PatrolEnemy" parent="." groups=["player"] instance=ExtResource( 1 )]
+position = Vector2( 198, 367 )
+
+[node name="ShootingEnemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 906, 267 )
+
+[node name="Block" type="StaticBody2D" parent="."]
+position = Vector2( 498, 411 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block"]
+texture = ExtResource( 3 )
+
+[node name="Block2" type="StaticBody2D" parent="."]
+position = Vector2( 410, 411 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block2"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block2"]
+texture = ExtResource( 3 )
+
+[node name="Block3" type="StaticBody2D" parent="."]
+position = Vector2( 317, 411 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block3"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block3"]
+texture = ExtResource( 3 )
+
+[node name="Block4" type="StaticBody2D" parent="."]
+position = Vector2( 224, 411 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block4"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block4"]
+texture = ExtResource( 3 )
+
+[node name="Block5" type="StaticBody2D" parent="."]
+position = Vector2( 951, 320 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block5"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block5"]
+texture = ExtResource( 3 )
+
+[node name="Block6" type="StaticBody2D" parent="."]
+position = Vector2( 863, 320 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block6"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block6"]
+texture = ExtResource( 3 )
+
+[node name="Block7" type="StaticBody2D" parent="."]
+position = Vector2( 770, 320 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block7"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block7"]
+texture = ExtResource( 3 )
+
+[node name="Block8" type="StaticBody2D" parent="."]
+position = Vector2( 677, 320 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block8"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Block8"]
+texture = ExtResource( 3 )
