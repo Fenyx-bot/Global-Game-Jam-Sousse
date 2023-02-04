@@ -1,0 +1,25 @@
+{
+	"events": [
+		{
+			"character": "character-1675518445.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Once upon a time, the world tree started decaying.\nA brave Hero took upon the request to restore it.\nand save it from the evil spirits of the under world."
+		},
+		{
+			"call_node": {
+				"arguments": [
+
+				],
+				"method_name": "",
+				"target_node_path": ""
+			},
+			"event_id": "dialogic_042"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675518474.json",
+		"name": "Game Intro"
+	}
+}

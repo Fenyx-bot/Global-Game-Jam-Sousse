@@ -4,7 +4,7 @@ extends KinematicBody2D
 var MaxHealth = 100
 var Health = 25
 var MaxEssence = 100
-var Essence = 85
+var Essence = 100
 
 
 var speed = 400
