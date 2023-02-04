@@ -31,7 +31,7 @@ onready var healthBar = get_parent().get_node("HUD/Control/Health")
 onready var essenceBar = get_parent().get_node("HUD/Control/Essence")
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	pass
 
 func _process(_delta):
@@ -135,6 +135,7 @@ func flip():
 	#Flips the player character
 	anim.flip_h = !anim.flip_h
 	lookingRight = !lookingRight
+	get_node("Ball").position.x *= -1
 
 
 #Timers
