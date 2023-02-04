@@ -2,19 +2,20 @@ extends Control
 
 var selected_button = 0
 var play_pressed = false
+var in_menu = true
 
 func _ready():
 	$FadeOut/FadeOutAnim.play_backwards("fade_out")
 
 
 func _input(event):
-	if event.is_action_pressed("ui_down"):
+	if event.is_action_pressed("ui_down") and in_menu:
 		selected_button = min(selected_button + 1, 2)
 		select_button()
-	if event.is_action_pressed("ui_up"):
+	if event.is_action_pressed("ui_up") and in_menu:
 		selected_button = max(selected_button - 1, 0)
 		select_button()
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_released("ui_accept"):
 		match selected_button:
 			0:
 				_on_PlayButton_pressed()
@@ -24,10 +25,11 @@ func _input(event):
 				_on_Quit_pressed()
 	
 func select_button():
-	for btn in $BG/ElementsContainer/Buttons/ButtonsContainer.get_children():
-		btn.get_node("Label").hide()
-	var btn = $BG/ElementsContainer/Buttons/ButtonsContainer.get_child(selected_button)
-	btn.get_node("Label").show()
+	if in_menu:
+		for btn in $BG/ElementsContainer/Buttons/ButtonsContainer.get_children():
+			btn.get_node("Label").hide()
+		var btn = $BG/ElementsContainer/Buttons/ButtonsContainer.get_child(selected_button)
+		btn.get_node("Label").show()
 	
 
 
@@ -39,8 +41,9 @@ func _on_PlayButton_pressed():
 
 
 func _on_SettingsButton_pressed():
+	in_menu = false
 	$SettingsAnim.play("switch")
-
+	$BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton.grab_focus()
 
 func _on_Quit_pressed():
 	get_tree().quit()
@@ -52,7 +55,9 @@ func _on_FadeOutAnim_animation_finished(anim_name):
 
 
 func _on_BackButton_pressed():
+	in_menu = true
 	$SettingsAnim.play_backwards("switch")
+	$BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton.grab_focus()
 
 
 func _on_FullScreenButton_pressed():
