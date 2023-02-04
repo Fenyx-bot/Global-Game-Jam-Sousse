@@ -18,6 +18,7 @@ var isDead = false
 var lookingRight = true
 var jumped = false
 var justLanded = false
+var takingDamage = false
 
 var gunDirection = Vector2.ZERO
 var prevGunDirection = Vector2.ZERO
@@ -158,6 +159,8 @@ func flip():
 	lookingRight = !lookingRight
 	get_node("Ball").position.x *= -1
 
+func TakeDamage(arg):
+	Health -= arg
 
 #Timers
 func _on_TimeBetweenShots_timeout():

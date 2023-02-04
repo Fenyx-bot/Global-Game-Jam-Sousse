@@ -258,6 +258,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("../BG/ElementsContainer:margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 0.0 ]
+}
 
 [sub_resource type="Animation" id=129]
 length = 0.001
@@ -303,7 +315,7 @@ color = Color( 0, 0, 0, 1 )
 [node name="ElementsContainer" type="HBoxContainer" parent="BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 1024.0
+margin_right = 3072.0
 rect_min_size = Vector2( 2048, 600 )
 
 [node name="Buttons" type="ColorRect" parent="BG/ElementsContainer"]
@@ -376,7 +388,7 @@ valign = 1
 
 [node name="ImageContainer" type="Control" parent="BG/ElementsContainer"]
 margin_left = 404.0
-margin_right = 1022.0
+margin_right = 2046.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
@@ -393,8 +405,8 @@ margin_right = -2048.0
 margin_bottom = 600.0
 
 [node name="ImageContainer2" type="Control" parent="BG/ElementsContainer"]
-margin_left = 1026.0
-margin_right = 1644.0
+margin_left = 2050.0
+margin_right = 3692.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
@@ -411,8 +423,8 @@ margin_right = -2048.0
 margin_bottom = 600.0
 
 [node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer"]
-margin_left = 1648.0
-margin_right = 2048.0
+margin_left = 3696.0
+margin_right = 4096.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 400, 0 )
 color = Color( 0, 0, 0, 1 )

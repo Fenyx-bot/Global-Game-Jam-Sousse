@@ -13,7 +13,7 @@
 [ext_resource path="res://Assets/TileMaps/tiles/1.png" type="Texture" id=11]
 [ext_resource path="res://Nodes/EssenceDroplets.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/TileMaps/LightSource.png" type="Texture" id=13]
-[ext_resource path="res://Audio/ggj_gameplay.mp3" type="AudioStream" id=14]
+[ext_resource path="res://Audio/ggj_gameplay.ogg" type="AudioStream" id=14]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=15]
 [ext_resource path="res://Assets/TileMaps/tiles/2.png" type="Texture" id=16]
 [ext_resource path="res://Assets/UI/HealthBarBorder.png" type="Texture" id=17]
@@ -417,7 +417,7 @@ blend_mode = 1
 
 [sub_resource type="Gradient" id=72]
 offsets = PoolRealArray( 0, 0.70625, 1 )
-colors = PoolColorArray( 0.0612183, 0, 0.0664063, 1, 1, 0.882813, 0.899292, 1, 1, 1, 1, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 1, 0.88855, 0.675781, 1, 1, 1, 1, 1 )
 
 [sub_resource type="GradientTexture" id=73]
 gradient = SubResource( 72 )
@@ -651,8 +651,8 @@ shader_param/roll_variation = 0.1
 shader_param/distort_intensity = 0.05
 shader_param/noise_opacity = 0.4
 shader_param/noise_speed = 5.0
-shader_param/static_noise_intensity = 0.03
-shader_param/aberration = 0.01
+shader_param/static_noise_intensity = 0.02
+shader_param/aberration = 0.0
 shader_param/brightness = 1.4
 shader_param/discolor = false
 shader_param/warp_amount = 0.1
@@ -705,7 +705,7 @@ z_index = 1
 texture = ExtResource( 2 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.34902, 0.34902, 0.380392, 1 )
+color = Color( 0.329412, 0.32549, 0.317647, 1 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 74 )
