@@ -19,6 +19,9 @@ var lookingRight = true
 var jumped = false
 var justLanded = false
 
+var gunDirection = Vector2.ZERO
+var prevGunDirection = Vector2.ZERO
+
 #Nodes
 onready var anim = get_node("Sprite")
 
@@ -86,6 +89,7 @@ func _physics_process(_delta):
 	if is_on_floor():
 		if Input.is_action_pressed("jump") and holdtimer == 0:
 			jumped = true
+			$JumpAudio.play()
 			get_node("Timers/JumpTimer").start()
 			velocity.y = jumpForce 
 	
@@ -102,10 +106,25 @@ func HandleUI():
 	healthBar.value = Health
 	essenceBar.value = Essence
 
+func _input(event):
+	if event is InputEventMouseMotion:
+		prevGunDirection = get_global_mouse_position() - global_position
+		GunHolder.look_at(get_global_mouse_position())
+
 func HandleGun():
 	#handles all of our gun functions
 	#it's not even a gun anymore but sure
+	gunDirection = get_global_mouse_position() - global_position
 	GunHolder.look_at(get_global_mouse_position())
+	
+	var gamepad_vector = Input.get_vector("aim_left", "aim_right","aim_up", "aim_down")
+	if  gamepad_vector != Vector2.ZERO:
+		gunDirection = gamepad_vector
+		prevGunDirection = gamepad_vector
+		GunHolder.look_at(global_position + gunDirection)
+	else:
+		GunHolder.look_at(global_position + prevGunDirection)
+		
 	if Input.is_action_just_pressed("shoot") and canShoot:
 		canShoot = false
 		get_node("Timers/TimeBetweenShots").start()
@@ -114,10 +133,12 @@ func HandleGun():
 func shoot():
 	#Instatiates a bullet and shoot its toward the mouse
 	var bulletInstance = bullet.instance()
-	bulletInstance.dir = get_global_mouse_position() - global_position
+	bulletInstance.dir = prevGunDirection
 	bulletInstance.global_position = gunPos.get_global_position()
 	bulletInstance.rotation = GunHolder.rotation
 	get_tree().get_root().add_child(bulletInstance)
+	
+	
 
 func heal():
 	#Healths the player at the price of the essence collected
