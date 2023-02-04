@@ -1,0 +1,542 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Audio/ggj_theme.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Scripts/MenuScene.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+blend_mode = 1
+
+[sub_resource type="Shader" id=124]
+code = "shader_type canvas_item;
+
+uniform bool overlay = false;
+
+uniform float scanlines_opacity : hint_range(0.0, 1.0) = 0.4;
+uniform float scanlines_width : hint_range(0.0, 0.5) = 0.25;
+uniform float grille_opacity : hint_range(0.0, 1.0) = 0.3;
+uniform vec2 resolution = vec2(640.0, 480.0); 
+
+uniform bool pixelate = true; 
+
+uniform bool roll = true;
+uniform float roll_speed = 8.0; 
+uniform float roll_size : hint_range(0.0, 100.0) = 15.0;
+uniform float roll_variation : hint_range(0.1, 5.0) = 1.8; 
+uniform float distort_intensity : hint_range(0.0, 0.2) = 0.05; 
+
+uniform float noise_opacity : hint_range(0.0, 1.0) = 0.4;
+uniform float noise_speed = 5.0; 
+
+uniform float static_noise_intensity : hint_range(0.0, 1.0) = 0.06;
+
+uniform float aberration : hint_range(-1.0, 1.0) = 0.03; 
+uniform float brightness = 1.4; 
+uniform bool discolor = true;
+
+uniform float warp_amount :hint_range(0.0, 5.0) = 1.0; 
+uniform bool clip_warp = false;
+
+uniform float vignette_intensity = 0.4; 
+uniform float vignette_opacity : hint_range(0.0, 1.0) = 0.5;
+
+
+vec2 random(vec2 uv){
+    uv = vec2( dot(uv, vec2(127.1,311.7) ),
+               dot(uv, vec2(269.5,183.3) ) );
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+
+float noise(vec2 uv) {
+    vec2 uv_index = floor(uv);
+    vec2 uv_fract = fract(uv);
+
+    vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix( mix( dot( random(uv_index + vec2(0.0,0.0) ), uv_fract - vec2(0.0,0.0) ),
+                     dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
+                mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
+                     dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) * 0.5 + 0.5;
+}
+
+vec2 warp(vec2 uv){
+	vec2 delta = uv - 0.5;
+	float delta2 = dot(delta.xy, delta.xy);
+	float delta4 = delta2 * delta2;
+	float delta_offset = delta4 * warp_amount;
+	
+	return uv + delta * delta_offset;
+}
+
+float border (vec2 uv){
+	float radius = min(warp_amount, 0.08);
+	radius = max(min(min(abs(radius * 2.0), abs(1.0)), abs(1.0)), 1e-5);
+	vec2 abs_uv = abs(uv * 2.0 - 1.0) - vec2(1.0, 1.0) + radius;
+	float dist = length(max(vec2(0.0), abs_uv)) / radius;
+	float square = smoothstep(0.96, 1.0, dist);
+	return clamp(1.0 - square, 0.0, 1.0);
+}
+
+float vignette(vec2 uv){
+	uv *= 1.0 - uv.xy;
+	float vignette = uv.x * uv.y * 15.0;
+	return pow(vignette, vignette_intensity * vignette_opacity);
+}
+
+void fragment()
+{
+	vec2 uv = overlay ? warp(SCREEN_UV) : warp(UV);
+	vec2 text_uv = uv;
+	vec2 roll_uv = vec2(0.0);
+	float time = roll ? TIME : 0.0;
+	
+	if (pixelate)
+	{
+		text_uv = ceil(uv * resolution) / resolution;
+	}
+	
+	
+	float roll_line = 0.0;
+	if (roll || noise_opacity > 0.0)
+	{
+		roll_line = smoothstep(0.3, 0.9, sin(uv.y * roll_size - (time * roll_speed) ) );
+		roll_line *= roll_line * smoothstep(0.3, 0.9, sin(uv.y * roll_size * roll_variation - (time * roll_speed * roll_variation) ) );
+		roll_uv = vec2(( roll_line * distort_intensity * (1.-UV.x)), 0.0);
+	}
+	
+	vec4 text;
+	if (roll)
+	{
+		text.r = texture(SCREEN_TEXTURE, text_uv + roll_uv * 0.8 + vec2(aberration, 0.0) * .1).r;
+		text.g = texture(SCREEN_TEXTURE, text_uv + roll_uv * 1.2 - vec2(aberration, 0.0) * .1 ).g;
+		text.b = texture(SCREEN_TEXTURE, text_uv + roll_uv).b;
+		text.a = 1.0;
+	}
+	else
+	{
+		text.r = texture(SCREEN_TEXTURE, text_uv + vec2(aberration, 0.0) * .1).r;
+		text.g = texture(SCREEN_TEXTURE, text_uv - vec2(aberration, 0.0) * .1).g;
+		text.b = texture(SCREEN_TEXTURE, text_uv).b;
+		text.a = 1.0;
+	}
+	
+	float r = text.r;
+	float g = text.g;
+	float b = text.b;
+	
+	uv = warp(UV);
+	
+	if (grille_opacity > 0.0){
+		
+		float g_r = smoothstep(0.85, 0.95, abs(sin(uv.x * (resolution.x * 3.14159265))));
+		r = mix(r, r * g_r, grille_opacity);
+		
+		float g_g = smoothstep(0.85, 0.95, abs(sin(1.05 + uv.x * (resolution.x * 3.14159265))));
+		g = mix(g, g * g_g, grille_opacity);
+		
+		float b_b = smoothstep(0.85, 0.95, abs(sin(2.1 + uv.x * (resolution.x * 3.14159265))));
+		b = mix(b, b * b_b, grille_opacity);
+		
+	}
+	
+	text.r = clamp(r * brightness, 0.0, 1.0);
+	text.g = clamp(g * brightness, 0.0, 1.0);
+	text.b = clamp(b * brightness, 0.0, 1.0);
+	
+	float scanlines = 0.5;
+	if (scanlines_opacity > 0.0)
+	{
+		scanlines = smoothstep(scanlines_width, scanlines_width + 0.5, abs(sin(uv.y * (resolution.y * 3.14159265))));
+		text.rgb = mix(text.rgb, text.rgb * vec3(scanlines), scanlines_opacity);
+	}
+	
+	if (noise_opacity > 0.0)
+	{
+		float noise = smoothstep(0.4, 0.5, noise(uv * vec2(2.0, 200.0) + vec2(10.0, (TIME * (noise_speed))) ) );
+		
+		roll_line *= noise * scanlines * clamp(random((ceil(uv * resolution) / resolution) + vec2(TIME * 0.8, 0.0)).x + 0.8, 0.0, 1.0);
+		text.rgb = clamp(mix(text.rgb, text.rgb + roll_line, noise_opacity), vec3(0.0), vec3(1.0));
+	}
+	
+	if (static_noise_intensity > 0.0)
+	{
+		text.rgb += clamp(random((ceil(uv * resolution) / resolution) + fract(TIME)).x, 0.0, 1.0) * static_noise_intensity;
+	}
+	
+	text.rgb *= border(uv);
+	text.rgb *= vignette(uv);
+	if (clip_warp)
+	{
+		text.a = border(uv);
+	}
+	
+	float saturation = 0.5;
+	float contrast = 1.2;
+	if (discolor)
+	{
+		// Saturation
+		vec3 greyscale = vec3(text.r + text.g + text.b) / 3.;
+		text.rgb = mix(text.rgb, greyscale, saturation);
+		
+		// Contrast
+		float midpoint = pow(0.5, 2.2);
+		text.rgb = (text.rgb - vec3(midpoint)) * contrast + midpoint;
+	}
+	
+	COLOR = text;
+}"
+
+[sub_resource type="ShaderMaterial" id=125]
+shader = SubResource( 124 )
+shader_param/overlay = true
+shader_param/scanlines_opacity = 0.134
+shader_param/scanlines_width = 0.25
+shader_param/grille_opacity = 0.0
+shader_param/resolution = Vector2( 640, 480 )
+shader_param/pixelate = false
+shader_param/roll = false
+shader_param/roll_speed = 8.0
+shader_param/roll_size = 0.0
+shader_param/roll_variation = 0.1
+shader_param/distort_intensity = 0.05
+shader_param/noise_opacity = 0.4
+shader_param/noise_speed = 5.0
+shader_param/static_noise_intensity = 0.06
+shader_param/aberration = 0.01
+shader_param/brightness = 1.4
+shader_param/discolor = false
+shader_param/warp_amount = 0.1
+shader_param/clip_warp = true
+shader_param/vignette_intensity = 3.0
+shader_param/vignette_opacity = 1.0
+
+[sub_resource type="GradientTexture" id=131]
+width = 12
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.5
+glow_strength = 1.05
+glow_bloom = 0.1
+glow_blend_mode = 1
+
+[sub_resource type="Animation" id=126]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=127]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=129]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("BG/ElementsContainer:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=128]
+resource_name = "switch"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("BG/ElementsContainer:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -1024, 0 ) ]
+}
+
+[node name="MenuScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="ElementsContainer" type="HBoxContainer" parent="BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+rect_min_size = Vector2( 2048, 600 )
+
+[node name="Buttons" type="ColorRect" parent="BG/ElementsContainer"]
+margin_right = 400.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 400, 0 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/Buttons"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 32
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+margin_top = 247.0
+margin_right = 400.0
+margin_bottom = 261.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "Play"
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/PlayButton"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Play"
+align = 1
+valign = 1
+
+[node name="SettingsButton" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+margin_top = 293.0
+margin_right = 400.0
+margin_bottom = 307.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "Settings"
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton"]
+visible = false
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="Quit" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+margin_top = 339.0
+margin_right = 400.0
+margin_bottom = 353.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "Quit"
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/Quit"]
+visible = false
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Quit"
+align = 1
+valign = 1
+
+[node name="ImageContainer" type="Control" parent="BG/ElementsContainer"]
+margin_left = 404.0
+margin_right = 1022.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+expand = true
+
+[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer"]
+material = SubResource( 125 )
+margin_left = -2048.0
+margin_right = -2048.0
+margin_bottom = 600.0
+
+[node name="ImageContainer2" type="Control" parent="BG/ElementsContainer"]
+margin_left = 1026.0
+margin_right = 1644.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+expand = true
+
+[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer2"]
+material = SubResource( 125 )
+margin_left = -2048.0
+margin_right = -2048.0
+margin_bottom = 600.0
+
+[node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer"]
+margin_left = 1648.0
+margin_right = 2048.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 400, 0 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/SettingsRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = 32.0
+margin_right = -32.0
+margin_bottom = -32.0
+custom_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 112.0
+margin_right = 336.0
+margin_bottom = 143.0
+text = "Settings
+_________"
+align = 1
+valign = 1
+
+[node name="FullScreenButton" type="Button" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 175.0
+margin_right = 336.0
+margin_bottom = 189.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "Fullscreen Mode: ON"
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer/FullScreenButton"]
+visible = false
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 221.0
+margin_right = 336.0
+margin_bottom = 235.0
+text = "Overall Volume"
+align = 1
+valign = 1
+
+[node name="VolumeSlider" type="HSlider" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 267.0
+margin_right = 336.0
+margin_bottom = 283.0
+rect_min_size = Vector2( 200, 0 )
+custom_icons/grabber_highlight = SubResource( 131 )
+min_value = -60.0
+max_value = 0.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Label3" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 315.0
+margin_right = 336.0
+margin_bottom = 329.0
+text = "Music Volume"
+align = 1
+valign = 1
+
+[node name="MusicSlider" type="HSlider" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 361.0
+margin_right = 336.0
+margin_bottom = 377.0
+rect_min_size = Vector2( 200, 0 )
+min_value = -60.0
+max_value = 0.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="BackButton" type="Button" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+margin_top = 409.0
+margin_right = 336.0
+margin_bottom = 423.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 2 )
+text = "Back"
+
+[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Back"
+align = 1
+valign = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="BGMAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true
+bus = "Music"
+
+[node name="FadeOut" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+
+[node name="FadeOutAnim" type="AnimationPlayer" parent="FadeOut"]
+anims/RESET = SubResource( 126 )
+anims/fade_out = SubResource( 127 )
+
+[node name="SettingsAnim" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 129 )
+anims/switch = SubResource( 128 )
+
+[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
+[connection signal="drag_ended" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/VolumeSlider" to="." method="_on_VolumeSlider_drag_ended"]
+[connection signal="drag_ended" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/MusicSlider" to="." method="_on_MusicSlider_drag_ended"]
+[connection signal="pressed" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="animation_finished" from="FadeOut/FadeOutAnim" to="." method="_on_FadeOutAnim_animation_finished"]
