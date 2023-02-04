@@ -89,7 +89,7 @@ func _physics_process(_delta):
 	if is_on_floor():
 		if Input.is_action_pressed("jump") and holdtimer == 0:
 			jumped = true
-			$JumpAudio.play()
+			#$JumpAudio.play()
 			get_node("Timers/JumpTimer").start()
 			velocity.y = jumpForce 
 	
