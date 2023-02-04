@@ -86,6 +86,7 @@ func _physics_process(_delta):
 	if is_on_floor():
 		if Input.is_action_pressed("jump") and holdtimer == 0:
 			jumped = true
+			$JumpAudio.play()
 			get_node("Timers/JumpTimer").start()
 			velocity.y = jumpForce 
 	
@@ -118,6 +119,8 @@ func shoot():
 	bulletInstance.global_position = gunPos.get_global_position()
 	bulletInstance.rotation = GunHolder.rotation
 	get_tree().get_root().add_child(bulletInstance)
+	
+	
 
 func heal():
 	#Healths the player at the price of the essence collected

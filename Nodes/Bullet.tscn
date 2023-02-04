@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/PlayerSprites/gun.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bullet.gd" type="Script" id=2]
+[ext_resource path="res://Audio/bullet.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.5, 2.25 )
@@ -27,5 +28,9 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletArea"]
 position = Vector2( 1, -0.6875 )
 shape = SubResource( 2 )
+
+[node name="BulletAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
 
 [connection signal="body_entered" from="BulletArea" to="." method="_on_BulletArea_body_entered"]
