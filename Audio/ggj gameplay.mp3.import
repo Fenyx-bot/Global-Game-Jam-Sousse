@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ggj gameplay.mp3-d261c816f241e1257356950f3b0d8ba8.mp3str"
+
+[deps]
+
+source_file="res://Audio/ggj gameplay.mp3"
+dest_files=[ "res://.import/ggj gameplay.mp3-d261c816f241e1257356950f3b0d8ba8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
