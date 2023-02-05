@@ -115,7 +115,7 @@ radius = 15.0
 height = 30.0
 
 [sub_resource type="RectangleShape2D" id=52]
-extents = Vector2( 179, 28 )
+extents = Vector2( 280, 28 )
 
 [sub_resource type="RectangleShape2D" id=54]
 extents = Vector2( 17.5, 29.5 )

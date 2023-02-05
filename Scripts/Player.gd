@@ -9,7 +9,7 @@ var Essence = 100
 const MAX_SPEED = 2000
 const FRICTION_AIR = 0.95
 const FRICTION_GROUND = 0.85
-const CHAIN_PULL = 125
+const CHAIN_PULL = 80
 
 var speed = 400
 var velocity = Vector2()
@@ -106,8 +106,6 @@ func _physics_process(_delta):
 	#Gravity
 	if !is_on_floor():
 		velocity.y += gravity
-		if velocity.y > 600:
-			velocity.y = 600
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -206,6 +204,8 @@ func flip():
 
 func TakeDamage(arg):
 	Health -= arg
+	get_node("Timers/damageTimer").start()
+	modulate = "e00000"
 
 #Timers
 func _on_TimeBetweenShots_timeout():
@@ -213,3 +213,7 @@ func _on_TimeBetweenShots_timeout():
 
 func _on_JumpTimer_timeout():
 	jumped = false
+
+
+func _on_damageTimer_timeout():
+	modulate = "ffffff"

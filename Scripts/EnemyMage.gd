@@ -3,8 +3,8 @@ extends KinematicBody2D
 #Stats
 var speed = 300
 var Health = 25
-var damage = 30
-var dropAmmount = 4
+var damage = 20
+var dropAmmount = 3
 
 var isDead = false
 var canHit = true

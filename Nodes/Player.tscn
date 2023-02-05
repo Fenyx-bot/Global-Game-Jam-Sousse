@@ -156,12 +156,10 @@ shape = SubResource( 38 )
 [node name="Ball" type="Sprite" parent="."]
 material = SubResource( 33 )
 position = Vector2( 30, 0 )
-z_index = 5
 texture = ExtResource( 4 )
 
 [node name="Ball2" type="Sprite" parent="Ball"]
 material = SubResource( 34 )
-z_index = 5
 texture = ExtResource( 4 )
 
 [node name="GunHolder" type="Node2D" parent="."]
@@ -198,8 +196,13 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="damageTimer" type="Timer" parent="Timers"]
+wait_time = 0.1
+one_shot = true
+
 [node name="JumpAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
 [connection signal="timeout" from="Timers/TimeBetweenShots" to="." method="_on_TimeBetweenShots_timeout"]
 [connection signal="timeout" from="Timers/JumpTimer" to="." method="_on_JumpTimer_timeout"]
+[connection signal="timeout" from="Timers/damageTimer" to="." method="_on_damageTimer_timeout"]

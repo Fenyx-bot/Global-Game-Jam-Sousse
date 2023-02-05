@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/TileMaps/Hookable.png" type="Texture" id=1]
+[ext_resource path="res://Assets/TileMaps/HookableRoot.png" type="Texture" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=2]
+blend_mode = 1
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 18.5, 17 )
+
+[node name="Swinger" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( -3, -48 )
+scale = Vector2( 3, 3 )
+z_index = -1
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 1 )
+
+[node name="Sprite3" type="Sprite" parent="Sprite"]
+material = SubResource( 2 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, 6 )
+shape = SubResource( 1 )
