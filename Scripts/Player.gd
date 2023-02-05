@@ -23,6 +23,7 @@ var lookingRight = true
 var jumped = false
 var justLanded = false
 var takingDamage = false
+var DeathTimerStarted = false
 
 var gunDirection = Vector2.ZERO
 var prevGunDirection = Vector2.ZERO
@@ -47,17 +48,17 @@ func _ready():
 	pass
 
 func _process(_delta):
-	HandleGun()
-	HandleUI()
-	
-	#Movement
-	if holdtimer == 0:
-		velocity.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-		velocity.x *= speed
-	else:
-		velocity.x = 0
-	
-	
+	if !isDead:
+		HandleGun()
+		HandleUI()
+		#Movement
+		if holdtimer == 0:
+			velocity.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
+			velocity.x *= speed
+		else:
+			velocity.x = 0
+		
+		
 	#State Mashine for animations
 	if is_on_floor():
 		if isDead:
@@ -70,21 +71,22 @@ func _process(_delta):
 		if velocity.y != 0:
 			if jumped:
 				anim.play("jump")
-	
-	#Making sure that the character is always facing the mouse
-	var mousePos = get_global_mouse_position()
-	if mousePos.x - global_position.x > 0 and !lookingRight:
-		flip()
-	elif mousePos.x - global_position.x < 0 and lookingRight:
-		flip()
-	
-	#Healing input
-	if Input.is_action_pressed("heal") and Health < MaxHealth:
-		holdtimer += _delta
-		if holdtimer > 1:
-			heal()
-	else:
-		holdtimer = 0
+		
+	if !isDead:
+		#Making sure that the character is always facing the mouse
+		var mousePos = get_global_mouse_position()
+		if mousePos.x - global_position.x > 0 and !lookingRight:
+			flip()
+		elif mousePos.x - global_position.x < 0 and lookingRight:
+			flip()
+		
+		#Healing input
+		if Input.is_action_pressed("heal") and Health < MaxHealth:
+			holdtimer += _delta
+			if holdtimer > 1:
+				heal()
+		else:
+			holdtimer = 0
 	
 	#Capping Stats and resetting
 	if Essence < 0:
@@ -94,14 +96,15 @@ func _process(_delta):
 		isDead = true
 
 func _physics_process(_delta):
-	HandleGrapple()
-	#Jumping
-	if is_on_floor():
-		if Input.is_action_pressed("jump") and holdtimer == 0:
-			jumped = true
-			$JumpAudio.play()
-			get_node("Timers/JumpTimer").start()
-			velocity.y = jumpForce 
+	if !isDead:
+		HandleGrapple()
+		#Jumping
+		if is_on_floor():
+			if Input.is_action_pressed("jump") and holdtimer == 0:
+				jumped = true
+				$JumpAudio.play()
+				get_node("Timers/JumpTimer").start()
+				velocity.y = jumpForce 
 	
 	#Gravity
 	if !is_on_floor():
@@ -206,6 +209,15 @@ func TakeDamage(arg):
 	Health -= arg
 	get_node("Timers/damageTimer").start()
 	modulate = "e00000"
+	if Health <= 0:
+		Die()
+
+func Die():
+	if !DeathTimerStarted:
+		DeathTimerStarted = true
+		isDead = true
+		#get_parent().get_node("AnimationPlayer").play("fade out")
+		get_node("Timers/deathTimer").start()
 
 #Timers
 func _on_TimeBetweenShots_timeout():
@@ -217,3 +229,20 @@ func _on_JumpTimer_timeout():
 
 func _on_damageTimer_timeout():
 	modulate = "ffffff"
+
+
+func _on_deathTimer_timeout():
+	#get_parent().get_node("AnimationPlayer").play("fade in")
+	match get_parent().altairsActivated:
+		0:
+			get_tree().reload_current_scene()
+		1:
+			position = Vector2(-686, 51)
+			Health = MaxHealth * 0.5
+			Essence = 0
+		2:
+			position = Vector2(3144, 1730)
+			Health = MaxHealth * 0.5
+			Essence = 0
+	isDead = false
+	DeathTimerStarted = false

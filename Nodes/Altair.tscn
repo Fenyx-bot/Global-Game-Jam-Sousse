@@ -41,6 +41,7 @@ tracks/0/keys = {
 }
 
 [node name="Altair" type="Area2D"]
+z_index = -1
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]

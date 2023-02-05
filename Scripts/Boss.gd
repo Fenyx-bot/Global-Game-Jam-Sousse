@@ -28,15 +28,15 @@ func _on_MoveTimer_timeout():
 
 
 func _on_DetectionArea_body_entered(body):
-	if body.is_in_group('player'):
+	if body.name == "Player":
 		target = body
 
 func _on_DetectionArea_body_exited(body):
-	if body.is_in_group('player'):
+	if body.name == "Player":
 		target = null
 
 func _on_ShootTimer_timeout():
-	if target:
+	if target and !target.isDead:
 		shoot()
 
 
@@ -44,8 +44,9 @@ func shoot():
 	#Instatiates a bullet and shoot its toward the mouse
 	var bulletInstance = bullet.instance()
 	bulletInstance.dir = (target.global_position - global_position).normalized()
-	bulletInstance.global_position = global_position + Vector2(0,64)
+	bulletInstance.global_position = get_node("Aim/BulletPoint").get_global_position()
 	bulletInstance.rotation = get_angle_to(target.global_position)
+	bulletInstance.modulate = Color.red
 	get_tree().get_root().add_child(bulletInstance)
 	
 func TakeDamage(arg):
@@ -57,6 +58,6 @@ func Die():
 	isDead = true
 	velocity = Vector2.ZERO
 	get_node("CollisionShape2D").set_deferred("disabled", true)
-	# GAME OVER
-	OS.alert('You win!')
+	get_parent().MiniBossAlive = false
+	queue_free()
 	
