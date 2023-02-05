@@ -252,6 +252,7 @@ mix_rate=48000
 
 [display]
 
+mouse_cursor/custom_image="res://Assets/UI/crosshair.png"
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 #Stats
 var MaxHealth = 100
-var Health = 25
+var Health = 100
 var MaxEssence = 100
-var Essence = 100
+var Essence = 20
 
 const MAX_SPEED = 2000
 const FRICTION_AIR = 0.95
@@ -24,6 +24,7 @@ var jumped = false
 var justLanded = false
 var takingDamage = false
 var DeathTimerStarted = false
+var inDialogue = true
 
 var gunDirection = Vector2.ZERO
 var prevGunDirection = Vector2.ZERO
@@ -48,9 +49,9 @@ func _ready():
 	pass
 
 func _process(_delta):
-	if !isDead:
+	HandleUI()
+	if !isDead and !inDialogue:
 		HandleGun()
-		HandleUI()
 		#Movement
 		if holdtimer == 0:
 			velocity.x = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
@@ -72,7 +73,7 @@ func _process(_delta):
 			if jumped:
 				anim.play("jump")
 		
-	if !isDead:
+	if !isDead and !inDialogue:
 		#Making sure that the character is always facing the mouse
 		var mousePos = get_global_mouse_position()
 		if mousePos.x - global_position.x > 0 and !lookingRight:
@@ -96,7 +97,7 @@ func _process(_delta):
 		isDead = true
 
 func _physics_process(_delta):
-	if !isDead:
+	if !isDead and !inDialogue:
 		HandleGrapple()
 		#Jumping
 		if is_on_floor():
@@ -244,5 +245,7 @@ func _on_deathTimer_timeout():
 			position = Vector2(3144, 1730)
 			Health = MaxHealth * 0.5
 			Essence = 0
+	if get_parent().MiniBossAlive:
+		get_parent().get_node("MiniBoss").Health = get_parent().get_node("MiniBoss").maxHealth
 	isDead = false
 	DeathTimerStarted = false

@@ -4,7 +4,7 @@
 			"character": "character-1675518445.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "Demetria, My fall is near.\nCome back to me, my dear."
+			"text": "It is ironic, how the same creatures I have protected for years turned against me.\nI fed them, gave them shelter, but in the end, it was all for nothing."
 		},
 		{
 			"call_node": {
@@ -19,7 +19,7 @@
 	],
 	"metadata": {
 		"dialogic-version": "1.4.5",
-		"file": "timeline-1675518474.json",
-		"name": "Game Intro"
+		"file": "timeline-1675603036.json",
+		"name": "Altair 1"
 	}
 }

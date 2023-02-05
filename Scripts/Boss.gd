@@ -6,7 +6,8 @@ var bullet = preload("res://Nodes/Bullet.tscn")
 
 const move_speed = 200
 
-var Health = 500
+var maxHealth = 500
+var Health = maxHealth
 
 var low_hp = false
 var move_dir = Vector2.LEFT
@@ -59,5 +60,7 @@ func Die():
 	velocity = Vector2.ZERO
 	get_node("CollisionShape2D").set_deferred("disabled", true)
 	get_parent().MiniBossAlive = false
+	get_parent().get_node("HUD/Control/BossBar").visible = false
 	queue_free()
 	
+ 

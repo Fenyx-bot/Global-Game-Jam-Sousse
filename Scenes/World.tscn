@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Nodes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/PlayerSprites/light.png" type="Texture" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Assets/UI/EssenceBarfiller.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=21]
 [ext_resource path="res://Nodes/Boss.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/TileMaps/Tree.png" type="Texture" id=24]
 
 [sub_resource type="CanvasItemMaterial" id=175]
 blend_mode = 1
@@ -1005,19 +1006,60 @@ points = PoolVector2Array( 7.18109, 7.325, 9.8811, 7.475, 12.3561, 16, 4.55609, 
 } ]
 1/z_index = 0
 
-[sub_resource type="Animation" id=519]
-resource_name = "AddLimit3"
+[sub_resource type="Animation" id=527]
+resource_name = "BossBarIn"
+length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Limiter3:position")
+tracks/0/path = NodePath("HUD/Control/BossBar:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HUD/Control/BossBar:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 460, 1134 ), Vector2( 460, 1555 ) ]
+"values": [ Vector2( 262, -51 ), Vector2( 262, 40 ) ]
+}
+
+[sub_resource type="Animation" id=528]
+resource_name = "BossBarOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("HUD/Control/BossBar:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 262, 40 ), Vector2( 262, -51 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HUD/Control/BossBar:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=520]
@@ -1047,7 +1089,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1688, 1060 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Limiter3:position")
+tracks/2/path = NodePath("Altair2:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1056,10 +1098,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 460, 1555 ) ]
+"values": [ Vector2( 3098, 1847 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Altair2:position")
+tracks/3/path = NodePath("Player/Camera2D:zoom")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1068,7 +1110,103 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3098, 1847 ) ]
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("HUD/Control/BossBar:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("HUD/Control/BossBar:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 262, -51 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Player:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 27, 2321 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Player/Sprite:animation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "move" ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Player/Sprite:frame")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Player/Sprite:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("HUD/Control/ColorRect:material:shader_param/multiplier")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.05 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Player:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=521]
@@ -1116,11 +1254,49 @@ tracks/0/keys = {
 "values": [ Vector2( 3098, 1847 ), Vector2( 3098, 1713 ) ]
 }
 
+[sub_resource type="Animation" id=525]
+resource_name = "ZoomIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player/Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=526]
+resource_name = "ZoomOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player/Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=524]
+extents = Vector2( 667, 635 )
+
+[sub_resource type="RectangleShape2D" id=529]
+extents = Vector2( 347, 312.5 )
+
 [node name="World" type="Node2D"]
 script = ExtResource( 15 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 705, 387 )
+position = Vector2( 27, 2321 )
 z_as_relative = false
 collision_layer = 2
 collision_mask = 17
@@ -1205,12 +1381,6 @@ z_index = -1
 position = Vector2( 1688, 1060 )
 z_index = -1
 
-[node name="Limiter3" parent="." instance=ExtResource( 16 )]
-position = Vector2( 460, 1555 )
-rotation = 1.5708
-scale = Vector2( 1.1, 1.1 )
-z_index = -1
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.329412, 0.32549, 0.317647, 1 )
 
@@ -1264,6 +1434,21 @@ texture_over = ExtResource( 19 )
 texture_progress = ExtResource( 20 )
 fill_mode = 3
 
+[node name="BossBar" type="ProgressBar" parent="HUD/Control"]
+modulate = Color( 1, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.0666667
+anchor_right = 0.5
+anchor_bottom = 0.0666667
+margin_left = -250.0
+margin_top = -91.0
+margin_right = 250.0
+margin_bottom = -61.0005
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
 [node name="PostProcessing" type="ColorRect" parent="HUD/Control"]
 material = SubResource( 125 )
 anchor_right = 1.0
@@ -1272,20 +1457,6 @@ margin_left = -63.0
 margin_top = -51.0
 margin_right = 45.0
 margin_bottom = 41.0
-
-[node name="BossBar" type="ProgressBar" parent="HUD/Control"]
-modulate = Color( 1, 0, 0, 1 )
-anchor_left = 0.5
-anchor_top = 0.0416667
-anchor_right = 0.5
-anchor_bottom = 0.0416667
-margin_left = -250.0
-margin_right = 250.0
-margin_bottom = 30.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="BGMAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 14 )
@@ -1787,10 +1958,37 @@ format = 1
 tile_data = PoolIntArray( 196689, 536870913, 0, 720945, 536870912, 0, 720946, 536870912, 0, 720947, 536870912, 0, 720948, 536870912, 0, 720949, 536870912, 0, 720950, 536870912, 0, 720951, 536870912, 0, 720952, 536870912, 0, 720953, 536870912, 0, 720954, 536870912, 0, 720955, 536870913, 0, 720956, 536870912, 0, 720957, 536870912, 0, 720958, 536870912, 0, 720959, 536870913, 0, 720960, 536870912, 0, 720961, 536870912, 0, 720962, 536870912, 0, 720963, 536870912, 0, 720964, 536870912, 0, 720965, 536870912, 0, 720966, 536870912, 0, 720967, 536870912, 0, 720968, 536870912, 0, 720969, 536870912, 0, 720970, 536870912, 0, 720971, 536870912, 0, 720972, 536870912, 0, 720973, 536870912, 0, 720974, 536870912, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/AddLimit3 = SubResource( 519 )
+anims/BossBarIn = SubResource( 527 )
+anims/BossBarOut = SubResource( 528 )
 anims/RESET = SubResource( 520 )
 anims/RemoveLimit1 = SubResource( 521 )
 anims/RemoveLimit2 = SubResource( 522 )
 anims/ShowAltair = SubResource( 523 )
+anims/ZoomIn = SubResource( 525 )
+anims/ZoomOut = SubResource( 526 )
+
+[node name="BossArea" type="Area2D" parent="."]
+position = Vector2( 3350, 1408 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArea"]
+position = Vector2( -15, -90 )
+shape = SubResource( 524 )
+
+[node name="TreeOfLife" type="Area2D" parent="."]
+position = Vector2( -319, 2328 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TreeOfLife"]
+position = Vector2( -11, -299.5 )
+shape = SubResource( 529 )
+
+[node name="Sprite" type="Sprite" parent="TreeOfLife"]
+position = Vector2( 7, -168 )
+scale = Vector2( 5, 5 )
+z_index = -1
+texture = ExtResource( 24 )
+flip_h = true
 
 [connection signal="body_entered" from="Damage" to="." method="_on_Damage_body_entered"]
+[connection signal="body_entered" from="BossArea" to="." method="_on_BossArea_body_entered"]
+[connection signal="body_exited" from="BossArea" to="." method="_on_BossArea_body_exited"]
+[connection signal="body_entered" from="TreeOfLife" to="." method="_on_TreeOfLife_body_entered"]

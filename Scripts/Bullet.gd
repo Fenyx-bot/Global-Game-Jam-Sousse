@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var speed = 900
-var damage = 20
+var damage = 100
 var dir = Vector2()
 
 

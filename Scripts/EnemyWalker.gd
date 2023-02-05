@@ -8,6 +8,7 @@ var dropAmmount = 4
 
 var isDead = false
 var canHit = true
+var inRange = false
 
 var velocity = Vector2()
 var gravity = 50
@@ -29,10 +30,10 @@ func _process(_delta):
 		elif velocity.x == 0:
 			anim.play("idle")
 	
-	if Player.takingDamage and canHit:
+	if Player.takingDamage and canHit and inRange:
 		canHit = false
-		get_node("Timers/CanHitTimer").start()
 		Player.TakeDamage(damage)
+		get_node("Timers/CanHitTimer").start()
 	
 	if velocity.x > 0 and !lookingRight:
 		flip()
@@ -97,11 +98,13 @@ func _on_Detection_body_exited(body):
 
 func _on_DamageArea_body_entered(body):
 	if body.name == "Player":
+		inRange = true
 		body.takingDamage = true
 
 
 func _on_DamageArea_body_exited(body):
 	if body.name == "Player":
+		inRange = false
 		body.takingDamage = false
 
 

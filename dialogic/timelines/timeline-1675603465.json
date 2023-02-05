@@ -1,0 +1,25 @@
+{
+	"events": [
+		{
+			"character": "character-1675603510.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Dear child, It's been decades since our last meeting.\nBut after all, everything is linked through fate.\nit was meant for us to be together again.\nThis is yet the beginning of our destiny.\nDemetra, my dear child may your soul rest in peace.\n"
+		},
+		{
+			"call_node": {
+				"arguments": [
+
+				],
+				"method_name": "gameEnd",
+				"target_node_path": "World"
+			},
+			"event_id": "dialogic_042"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675603465.json",
+		"name": "Game Outro"
+	}
+}

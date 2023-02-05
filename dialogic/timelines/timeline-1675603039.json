@@ -4,7 +4,7 @@
 			"character": "character-1675518445.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
-			"text": "Demetria, My fall is near.\nCome back to me, my dear."
+			"text": "To think it was the king of night would be behind this rebelion.\nAfter all I've done for him.\nFoolish Soul.\nYou did well Demetria.\nNow come to me."
 		},
 		{
 			"call_node": {
@@ -19,7 +19,7 @@
 	],
 	"metadata": {
 		"dialogic-version": "1.4.5",
-		"file": "timeline-1675518474.json",
-		"name": "Game Intro"
+		"file": "timeline-1675603039.json",
+		"name": "Altair 2"
 	}
 }
