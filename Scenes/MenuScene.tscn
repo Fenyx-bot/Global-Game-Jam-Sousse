@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Audio/ggj_theme.mp3" type="AudioStream" id=1]
 [ext_resource path="res://Scripts/MenuScene.gd" type="Script" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Assets/cover1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/cover2.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
@@ -14,6 +15,9 @@
 
 [sub_resource type="CanvasItemMaterial" id=3]
 blend_mode = 1
+
+[sub_resource type="GradientTexture" id=131]
+width = 12
 
 [sub_resource type="Shader" id=124]
 code = "shader_type canvas_item;
@@ -219,9 +223,6 @@ shader_param/clip_warp = true
 shader_param/vignette_intensity = 3.0
 shader_param/vignette_opacity = 1.0
 
-[sub_resource type="GradientTexture" id=131]
-width = 12
-
 [sub_resource type="Environment" id=1]
 background_mode = 4
 glow_enabled = true
@@ -286,12 +287,36 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("BG/PostProcessing:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 404, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BG:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=128]
 resource_name = "switch"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("BG/ElementsContainer:rect_position")
+tracks/0/path = NodePath("BG:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -318,11 +343,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1024.0
 rect_min_size = Vector2( 2048, 600 )
+custom_constants/separation = 0
 
 [node name="Section1" type="HBoxContainer" parent="BG/ElementsContainer"]
-margin_right = 1022.0
+margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
+custom_constants/separation = 0
 
 [node name="Buttons" type="ColorRect" parent="BG/ElementsContainer/Section1"]
 margin_right = 400.0
@@ -337,9 +364,9 @@ custom_constants/separation = 32
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 247.0
+margin_top = 199.0
 margin_right = 400.0
-margin_bottom = 261.0
+margin_bottom = 245.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -355,9 +382,9 @@ align = 1
 valign = 1
 
 [node name="SettingsButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 293.0
+margin_top = 277.0
 margin_right = 400.0
-margin_bottom = 307.0
+margin_bottom = 323.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -374,9 +401,9 @@ align = 1
 valign = 1
 
 [node name="Quit" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 339.0
+margin_top = 355.0
 margin_right = 400.0
-margin_bottom = 353.0
+margin_bottom = 401.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -393,8 +420,8 @@ align = 1
 valign = 1
 
 [node name="ImageContainer" type="Control" parent="BG/ElementsContainer/Section1"]
-margin_left = 404.0
-margin_right = 1022.0
+margin_left = 400.0
+margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
@@ -404,38 +431,31 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 texture = ExtResource( 3 )
 expand = true
-
-[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/Section1/ImageContainer"]
-material = SubResource( 125 )
-anchor_right = 1.0
-anchor_bottom = 1.0
+stretch_mode = 7
 
 [node name="Section2" type="HBoxContainer" parent="BG/ElementsContainer"]
-margin_left = 1026.0
+margin_left = 1024.0
 margin_right = 2048.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
+custom_constants/separation = 0
 
 [node name="ImageContainer2" type="Control" parent="BG/ElementsContainer/Section2"]
-margin_right = 618.0
+margin_right = 624.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
 [node name="Image" type="TextureRect" parent="BG/ElementsContainer/Section2/ImageContainer2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -1049.0
 grow_horizontal = 0
+texture = ExtResource( 4 )
 expand = true
-
-[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/Section2/ImageContainer2"]
-material = SubResource( 125 )
-anchor_right = 1.0
-anchor_bottom = 1.0
+stretch_mode = 7
 
 [node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer/Section2"]
-margin_left = 622.0
-margin_right = 1022.0
+margin_left = 624.0
+margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 400, 0 )
 color = Color( 0, 0, 0, 1 )
@@ -451,16 +471,16 @@ custom_constants/separation = 32
 alignment = 1
 
 [node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 128.0
+margin_top = 32.0
 margin_right = 368.0
-margin_bottom = 159.0
+margin_bottom = 127.0
 text = "Settings
 _________"
 align = 1
 valign = 1
 
 [node name="FullScreenButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 191.0
+margin_top = 159.0
 margin_right = 368.0
 margin_bottom = 205.0
 custom_styles/hover = SubResource( 4 )
@@ -481,15 +501,15 @@ valign = 1
 [node name="Label2" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 237.0
 margin_right = 368.0
-margin_bottom = 251.0
+margin_bottom = 283.0
 text = "Overall Volume"
 align = 1
 valign = 1
 
 [node name="VolumeSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 283.0
+margin_top = 315.0
 margin_right = 368.0
-margin_bottom = 299.0
+margin_bottom = 331.0
 rect_min_size = Vector2( 200, 0 )
 custom_icons/grabber_highlight = SubResource( 131 )
 min_value = -60.0
@@ -498,17 +518,17 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="Label3" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 331.0
+margin_top = 363.0
 margin_right = 368.0
-margin_bottom = 345.0
+margin_bottom = 409.0
 text = "Music Volume"
 align = 1
 valign = 1
 
 [node name="MusicSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 377.0
+margin_top = 441.0
 margin_right = 368.0
-margin_bottom = 393.0
+margin_bottom = 457.0
 rect_min_size = Vector2( 200, 0 )
 min_value = -60.0
 max_value = 0.0
@@ -516,9 +536,9 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="BackButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 425.0
+margin_top = 489.0
 margin_right = 368.0
-margin_bottom = 439.0
+margin_bottom = 535.0
 focus_neighbour_top = NodePath(".")
 focus_neighbour_bottom = NodePath(".")
 custom_styles/hover = SubResource( 4 )
@@ -534,6 +554,15 @@ anchor_bottom = 1.0
 text = "Back"
 align = 1
 valign = 1
+
+[node name="PostProcessing" type="ColorRect" parent="BG"]
+material = SubResource( 125 )
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -620.0
+margin_right = 624.0
+grow_horizontal = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
