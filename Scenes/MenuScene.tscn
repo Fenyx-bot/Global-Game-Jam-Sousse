@@ -225,8 +225,8 @@ width = 12
 [sub_resource type="Environment" id=1]
 background_mode = 4
 glow_enabled = true
-glow_intensity = 1.5
-glow_strength = 1.05
+glow_intensity = 0.25
+glow_strength = 1.04
 glow_bloom = 0.1
 glow_blend_mode = 1
 
@@ -337,9 +337,9 @@ custom_constants/separation = 32
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 247.0
+margin_top = 176.0
 margin_right = 400.0
-margin_bottom = 261.0
+margin_bottom = 237.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -355,9 +355,9 @@ align = 1
 valign = 1
 
 [node name="SettingsButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 293.0
+margin_top = 269.0
 margin_right = 400.0
-margin_bottom = 307.0
+margin_bottom = 330.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -374,9 +374,9 @@ align = 1
 valign = 1
 
 [node name="Quit" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
-margin_top = 339.0
+margin_top = 362.0
 margin_right = 400.0
-margin_bottom = 353.0
+margin_bottom = 423.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
@@ -443,31 +443,30 @@ color = Color( 0, 0, 0, 1 )
 [node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/Section2/SettingsRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 32.0
-margin_top = 32.0
-margin_right = -32.0
-margin_bottom = -32.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
 custom_constants/separation = 32
 alignment = 1
 
 [node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 112.0
-margin_right = 336.0
-margin_bottom = 143.0
+margin_right = 368.0
+margin_bottom = 125.0
 text = "Settings
 _________"
 align = 1
 valign = 1
 
 [node name="FullScreenButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 175.0
-margin_right = 336.0
-margin_bottom = 189.0
+margin_top = 157.0
+margin_right = 368.0
+margin_bottom = 203.0
 custom_styles/hover = SubResource( 4 )
 custom_styles/pressed = SubResource( 5 )
 custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
-text = "Fullscreen Mode: ON"
+text = "Fullscreen Mode: OFF"
 
 [node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/FullScreenButton"]
 visible = false
@@ -479,17 +478,17 @@ align = 1
 valign = 1
 
 [node name="Label2" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 221.0
-margin_right = 336.0
-margin_bottom = 235.0
+margin_top = 235.0
+margin_right = 368.0
+margin_bottom = 296.0
 text = "Overall Volume"
 align = 1
 valign = 1
 
 [node name="VolumeSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 267.0
-margin_right = 336.0
-margin_bottom = 283.0
+margin_top = 328.0
+margin_right = 368.0
+margin_bottom = 344.0
 rect_min_size = Vector2( 200, 0 )
 custom_icons/grabber_highlight = SubResource( 131 )
 min_value = -60.0
@@ -498,17 +497,17 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="Label3" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 315.0
-margin_right = 336.0
-margin_bottom = 329.0
+margin_top = 376.0
+margin_right = 368.0
+margin_bottom = 437.0
 text = "Music Volume"
 align = 1
 valign = 1
 
 [node name="MusicSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 361.0
-margin_right = 336.0
-margin_bottom = 377.0
+margin_top = 469.0
+margin_right = 368.0
+margin_bottom = 485.0
 rect_min_size = Vector2( 200, 0 )
 min_value = -60.0
 max_value = 0.0
@@ -516,9 +515,9 @@ tick_count = 10
 ticks_on_borders = true
 
 [node name="BackButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
-margin_top = 409.0
-margin_right = 336.0
-margin_bottom = 423.0
+margin_top = 517.0
+margin_right = 368.0
+margin_bottom = 578.0
 focus_neighbour_top = NodePath(".")
 focus_neighbour_bottom = NodePath(".")
 custom_styles/hover = SubResource( 4 )

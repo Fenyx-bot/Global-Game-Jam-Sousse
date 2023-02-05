@@ -26,9 +26,9 @@ func _input(event):
 	
 func select_button():
 	if in_menu:
-		for btn in $BG/ElementsContainer/Buttons/ButtonsContainer.get_children():
+		for btn in $BG/ElementsContainer/Section1/Buttons/ButtonsContainer.get_children():
 			btn.get_node("Label").hide()
-		var btn = $BG/ElementsContainer/Buttons/ButtonsContainer.get_child(selected_button)
+		var btn =  $BG/ElementsContainer/Section1/Buttons/ButtonsContainer.get_child(selected_button)
 		btn.get_node("Label").show()
 	
 
@@ -61,17 +61,17 @@ func _on_BackButton_pressed():
 
 
 func _on_FullScreenButton_pressed():
-	var FullscreenButton = $BG/ElementsContainer/SettingsRect/ButtonsContainer/FullScreenButton
-	FullscreenButton.text = "Fullscreen Mode: ON" if FullscreenButton.text == "Fullscreen Mode: OFF" else "Fullscreen Mode: ON"
+	var FullscreenButton = $BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/FullScreenButton
+	FullscreenButton.text = "Fullscreen Mode: ON" if FullscreenButton.text == "Fullscreen Mode: OFF" else "Fullscreen Mode: OFF"
 	OS.window_fullscreen = !OS.window_fullscreen
 
 
 func _on_VolumeSlider_drag_ended(value_changed):
-	var VolumeSlider = $BG/ElementsContainer/SettingsRect/ButtonsContainer/VolumeSlider
+	var VolumeSlider = $BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/VolumeSlider
 	AudioServer.set_bus_volume_db(0, VolumeSlider.value)
 
 func _on_MusicSlider_drag_ended(value_changed):
-	var MusicSlider = $BG/ElementsContainer/SettingsRect/ButtonsContainer/MusicSlider
+	var MusicSlider = $BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/MusicSlider
 	AudioServer.set_bus_volume_db(1, MusicSlider.value)
 
 
