@@ -6,6 +6,10 @@ var Health = 25
 var MaxEssence = 100
 var Essence = 100
 
+const MAX_SPEED = 2000
+const FRICTION_AIR = 0.95
+const FRICTION_GROUND = 0.85
+const CHAIN_PULL = 125
 
 var speed = 400
 var velocity = Vector2()
@@ -22,6 +26,10 @@ var takingDamage = false
 
 var gunDirection = Vector2.ZERO
 var prevGunDirection = Vector2.ZERO
+
+
+var chain_velocity:= Vector2(0,0)
+var can_jump = false
 
 #Nodes
 onready var anim = get_node("Sprite")
@@ -86,6 +94,7 @@ func _process(_delta):
 		isDead = true
 
 func _physics_process(_delta):
+	HandleGrapple()
 	#Jumping
 	if is_on_floor():
 		if Input.is_action_pressed("jump") and holdtimer == 0:
@@ -102,6 +111,37 @@ func _physics_process(_delta):
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func HandleGrapple():
+	get_node("GunHolder/Gun/Indicator/Glow").visible = get_node("GunHolder/Gun/RayCast2D").is_colliding()
+	
+	if $Chain.hooked:
+		chain_velocity = to_local($Chain.tip).normalized() * CHAIN_PULL
+		if chain_velocity.y > 0:
+			chain_velocity.y *= 0.55
+		else:
+			chain_velocity.y *= 1.65
+		if sign(chain_velocity.x) != sign(velocity.x):
+			chain_velocity.x *= 0.7
+	else:
+		chain_velocity = Vector2(0, 0)
+	velocity += chain_velocity
+	
+	velocity.y = clamp(velocity.y, -MAX_SPEED, MAX_SPEED)	# Make sure we are in our limits
+	velocity.x = clamp(velocity.x, -MAX_SPEED, MAX_SPEED)
+	var grounded = is_on_floor()
+	if grounded:
+		velocity.x *= FRICTION_GROUND
+		can_jump = true
+		if velocity.y >= 5:
+			velocity.y = 5
+	elif is_on_ceiling() and velocity.y <= -5:
+			velocity.y = -5
+	
+	if !grounded:
+		velocity.x *= FRICTION_AIR
+		if velocity.y > 0:
+			velocity.y *= FRICTION_AIR
+
 func HandleUI():
 	#Changes the values of the UI bars in realtime
 	healthBar.value = Health
@@ -111,6 +151,11 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		prevGunDirection = get_global_mouse_position() - global_position
 		GunHolder.look_at(get_global_mouse_position())
+	if event is InputEventMouseButton:
+		if event.pressed and event.is_action("grapple") and get_node("GunHolder/Gun/RayCast2D").is_colliding():
+			$Chain.shoot(event.position - get_viewport().size * 0.5)
+		else:
+			$Chain.release()
 
 func HandleGun():
 	#handles all of our gun functions

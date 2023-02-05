@@ -315,7 +315,8 @@ color = Color( 0, 0, 0, 1 )
 [node name="ElementsContainer" type="HBoxContainer" parent="BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 3072.0
+margin_right = 5120.0
+margin_bottom = 600.0
 rect_min_size = Vector2( 2048, 600 )
 
 [node name="Buttons" type="ColorRect" parent="BG/ElementsContainer"]
@@ -386,27 +387,7 @@ text = "Quit"
 align = 1
 valign = 1
 
-[node name="ImageContainer" type="Control" parent="BG/ElementsContainer"]
-margin_left = 404.0
-margin_right = 2046.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-
-[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-expand = true
-
-[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer"]
-material = SubResource( 125 )
-margin_left = -2048.0
-margin_right = -2048.0
-margin_bottom = 600.0
-
 [node name="ImageContainer2" type="Control" parent="BG/ElementsContainer"]
-margin_left = 2050.0
-margin_right = 3692.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
@@ -422,9 +403,25 @@ margin_left = -2048.0
 margin_right = -2048.0
 margin_bottom = 600.0
 
+[node name="ImageContainer" type="Control" parent="BG/ElementsContainer"]
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+expand = true
+
+[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer"]
+material = SubResource( 125 )
+margin_left = -2048.0
+margin_right = -2048.0
+margin_bottom = 600.0
+
 [node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer"]
-margin_left = 3696.0
-margin_right = 4096.0
+margin_left = 4720.0
+margin_right = 5120.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 400, 0 )
 color = Color( 0, 0, 0, 1 )

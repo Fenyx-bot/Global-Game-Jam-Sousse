@@ -19,7 +19,7 @@ onready var Player : KinematicBody2D = get_tree().get_root().get_node("World/Pla
 
 var essence = preload("res://Nodes/EssenceDroplets.tscn")
 
-func _process(delta):
+func _process(_delta):
 	if is_on_floor():
 		if isDead:
 			anim.play("die")
@@ -33,7 +33,7 @@ func _process(delta):
 		get_node("Timers/CanHitTimer").start()
 		Player.TakeDamage(damage)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not isDead:
 		if chase:
 			var playerPos = Player.get_global_position()
@@ -68,7 +68,7 @@ func Die():
 	
 
 func Drop():
-	for i in range(dropAmmount):
+	for _i in range(dropAmmount):
 		var essenceInstance = essence.instance()
 		essenceInstance.position = Vector2(position.x + rand_range(-50, 50), position.y - 10)
 		get_tree().get_root().add_child(essenceInstance)
@@ -94,3 +94,7 @@ func _on_DamageArea_body_exited(body):
 
 func _on_CanHitTimer_timeout():
 	canHit = true
+
+
+func _on_damageTimer_timeout():
+	pass # Replace with function body.
