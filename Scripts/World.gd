@@ -29,3 +29,7 @@ func _process(delta):
 func _on_Damage_body_entered(body):
 	if body.name == "Player":
 		get_node("Player").Die()
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().change_scene("res://Scenes/MenuScene.tscn")
