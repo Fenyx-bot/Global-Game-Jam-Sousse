@@ -21,10 +21,10 @@ onready var Player : KinematicBody2D = get_tree().get_root().get_node("World/Pla
 var essence = preload("res://Nodes/EssenceDroplets.tscn")
 
 func _process(_delta):
-	if is_on_floor():
-		if isDead:
-			anim.play("die")
-		elif velocity.x != 0:
+	if isDead:
+		anim.play("die")
+	elif is_on_floor():
+		if velocity.x != 0:
 			anim.play("move")
 		elif velocity.x == 0:
 			anim.play("idle")
