@@ -149,11 +149,10 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		prevGunDirection = get_global_mouse_position() - global_position
 		GunHolder.look_at(get_global_mouse_position())
-	if event is InputEventMouseButton:
-		if event.pressed and event.is_action("grapple") and get_node("GunHolder/Gun/RayCast2D").is_colliding():
-			$Chain.shoot(event.position - get_viewport().size * 0.5)
-		else:
-			$Chain.release()
+	if event.is_action("grapple") and event.pressed and get_node("GunHolder/Gun/RayCast2D").is_colliding():
+			$Chain.shoot(prevGunDirection)
+	if event.is_action_released("grapple"):
+		$Chain.release()
 
 func HandleGun():
 	#handles all of our gun functions
@@ -185,6 +184,7 @@ func shoot():
 	
 
 func heal():
+	$HealParticles.emitting = true
 	#Healths the player at the price of the essence collected
 	holdtimer = 0
 	

@@ -17,10 +17,11 @@
 [ext_resource path="res://Scripts/World.gd" type="Script" id=15]
 [ext_resource path="res://Nodes/Limiter.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Assets/UI/HealthBarBorder.png" type="Texture" id=17]
-[ext_resource path="res://Assets/UI/HealthBarfiller.png" type="Texture" id=18]
+[ext_resource path="res://Assets/UI/HealthParticle.png" type="Texture" id=18]
 [ext_resource path="res://Assets/UI/EssenceBarBorder.png" type="Texture" id=19]
 [ext_resource path="res://Assets/UI/EssenceBarfiller.png" type="Texture" id=20]
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=21]
+
 
 [sub_resource type="CanvasItemMaterial" id=175]
 blend_mode = 1
