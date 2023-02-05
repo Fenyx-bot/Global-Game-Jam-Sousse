@@ -124,8 +124,8 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=31]
-radius = 15.0
-height = 30.0
+radius = 5.0
+height = 44.0
 
 [sub_resource type="CanvasItemMaterial" id=33]
 
@@ -139,6 +139,7 @@ script = ExtResource( 2 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 14 )
 animation = "idle"
+frame = 5
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

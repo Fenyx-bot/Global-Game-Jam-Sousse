@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Audio/ggj_theme.mp3" type="AudioStream" id=1]
 [ext_resource path="res://Scripts/MenuScene.gd" type="Script" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
@@ -315,22 +316,27 @@ color = Color( 0, 0, 0, 1 )
 [node name="ElementsContainer" type="HBoxContainer" parent="BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 3072.0
+margin_right = 1024.0
 rect_min_size = Vector2( 2048, 600 )
 
-[node name="Buttons" type="ColorRect" parent="BG/ElementsContainer"]
+[node name="Section1" type="HBoxContainer" parent="BG/ElementsContainer"]
+margin_right = 1022.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Buttons" type="ColorRect" parent="BG/ElementsContainer/Section1"]
 margin_right = 400.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 400, 0 )
 color = Color( 0, 0, 0, 1 )
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/Buttons"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/Section1/Buttons"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 32
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+[node name="PlayButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
 margin_top = 247.0
 margin_right = 400.0
 margin_bottom = 261.0
@@ -340,7 +346,7 @@ custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "Play"
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/PlayButton"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/PlayButton"]
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -348,7 +354,7 @@ text = "Play"
 align = 1
 valign = 1
 
-[node name="SettingsButton" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+[node name="SettingsButton" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
 margin_top = 293.0
 margin_right = 400.0
 margin_bottom = 307.0
@@ -358,7 +364,7 @@ custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "Settings"
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/SettingsButton"]
 visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
@@ -367,7 +373,7 @@ text = "Settings"
 align = 1
 valign = 1
 
-[node name="Quit" type="Button" parent="BG/ElementsContainer/Buttons/ButtonsContainer"]
+[node name="Quit" type="Button" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer"]
 margin_top = 339.0
 margin_right = 400.0
 margin_bottom = 353.0
@@ -377,7 +383,7 @@ custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "Quit"
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/Buttons/ButtonsContainer/Quit"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/Quit"]
 visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
@@ -386,50 +392,55 @@ text = "Quit"
 align = 1
 valign = 1
 
-[node name="ImageContainer" type="Control" parent="BG/ElementsContainer"]
+[node name="ImageContainer" type="Control" parent="BG/ElementsContainer/Section1"]
 margin_left = 404.0
-margin_right = 2046.0
+margin_right = 1022.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
-[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer"]
+[node name="Image" type="TextureRect" parent="BG/ElementsContainer/Section1/ImageContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
+texture = ExtResource( 3 )
 expand = true
 
-[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer"]
+[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/Section1/ImageContainer"]
 material = SubResource( 125 )
-margin_left = -2048.0
-margin_right = -2048.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="ImageContainer2" type="Control" parent="BG/ElementsContainer"]
-margin_left = 2050.0
-margin_right = 3692.0
+[node name="Section2" type="HBoxContainer" parent="BG/ElementsContainer"]
+margin_left = 1026.0
+margin_right = 2048.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
-[node name="Image" type="TextureRect" parent="BG/ElementsContainer/ImageContainer2"]
+[node name="ImageContainer2" type="Control" parent="BG/ElementsContainer/Section2"]
+margin_right = 618.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="Image" type="TextureRect" parent="BG/ElementsContainer/Section2/ImageContainer2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -1049.0
 grow_horizontal = 0
 expand = true
 
-[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/ImageContainer2"]
+[node name="PostProcessing" type="ColorRect" parent="BG/ElementsContainer/Section2/ImageContainer2"]
 material = SubResource( 125 )
-margin_left = -2048.0
-margin_right = -2048.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer"]
-margin_left = 3696.0
-margin_right = 4096.0
+[node name="SettingsRect" type="ColorRect" parent="BG/ElementsContainer/Section2"]
+margin_left = 622.0
+margin_right = 1022.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 400, 0 )
 color = Color( 0, 0, 0, 1 )
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/SettingsRect"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="BG/ElementsContainer/Section2/SettingsRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 32.0
@@ -439,7 +450,7 @@ margin_bottom = -32.0
 custom_constants/separation = 32
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 112.0
 margin_right = 336.0
 margin_bottom = 143.0
@@ -448,7 +459,7 @@ _________"
 align = 1
 valign = 1
 
-[node name="FullScreenButton" type="Button" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="FullScreenButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 175.0
 margin_right = 336.0
 margin_bottom = 189.0
@@ -458,7 +469,7 @@ custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "Fullscreen Mode: ON"
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer/FullScreenButton"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/FullScreenButton"]
 visible = false
 material = SubResource( 3 )
 anchor_right = 1.0
@@ -467,7 +478,7 @@ text = "Settings"
 align = 1
 valign = 1
 
-[node name="Label2" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="Label2" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 221.0
 margin_right = 336.0
 margin_bottom = 235.0
@@ -475,7 +486,7 @@ text = "Overall Volume"
 align = 1
 valign = 1
 
-[node name="VolumeSlider" type="HSlider" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="VolumeSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 267.0
 margin_right = 336.0
 margin_bottom = 283.0
@@ -486,7 +497,7 @@ max_value = 0.0
 tick_count = 10
 ticks_on_borders = true
 
-[node name="Label3" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="Label3" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 315.0
 margin_right = 336.0
 margin_bottom = 329.0
@@ -494,7 +505,7 @@ text = "Music Volume"
 align = 1
 valign = 1
 
-[node name="MusicSlider" type="HSlider" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="MusicSlider" type="HSlider" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 361.0
 margin_right = 336.0
 margin_bottom = 377.0
@@ -504,7 +515,7 @@ max_value = 0.0
 tick_count = 10
 ticks_on_borders = true
 
-[node name="BackButton" type="Button" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer"]
+[node name="BackButton" type="Button" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer"]
 margin_top = 409.0
 margin_right = 336.0
 margin_bottom = 423.0
@@ -516,7 +527,7 @@ custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 2 )
 text = "Back"
 
-[node name="Label" type="Label" parent="BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton"]
+[node name="Label" type="Label" parent="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/BackButton"]
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -546,11 +557,17 @@ anims/fade_out = SubResource( 127 )
 anims/RESET = SubResource( 129 )
 anims/switch = SubResource( 128 )
 
-[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
-[connection signal="pressed" from="BG/ElementsContainer/Buttons/ButtonsContainer/Quit" to="." method="_on_Quit_pressed"]
-[connection signal="pressed" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
-[connection signal="drag_ended" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/VolumeSlider" to="." method="_on_VolumeSlider_drag_ended"]
-[connection signal="drag_ended" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/MusicSlider" to="." method="_on_MusicSlider_drag_ended"]
-[connection signal="pressed" from="BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="mouse_entered" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/PlayButton" to="." method="_on_Button_mouse_entered" binds= [ 0 ]]
+[connection signal="mouse_exited" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/PlayButton" to="." method="_on_Button_mouse_exited" binds= [ 0 ]]
+[connection signal="pressed" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="mouse_entered" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/SettingsButton" to="." method="_on_Button_mouse_entered" binds= [ 1 ]]
+[connection signal="mouse_exited" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/SettingsButton" to="." method="_on_Button_mouse_exited" binds= [ 1 ]]
+[connection signal="pressed" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="mouse_entered" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/Quit" to="." method="_on_Button_mouse_entered" binds= [ 2 ]]
+[connection signal="mouse_exited" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/Quit" to="." method="_on_Button_mouse_exited" binds= [ 2 ]]
+[connection signal="pressed" from="BG/ElementsContainer/Section1/Buttons/ButtonsContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/FullScreenButton" to="." method="_on_FullScreenButton_pressed"]
+[connection signal="drag_ended" from="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/VolumeSlider" to="." method="_on_VolumeSlider_drag_ended"]
+[connection signal="drag_ended" from="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/MusicSlider" to="." method="_on_MusicSlider_drag_ended"]
+[connection signal="pressed" from="BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="animation_finished" from="FadeOut/FadeOutAnim" to="." method="_on_FadeOutAnim_animation_finished"]
