@@ -14,7 +14,7 @@ const CHAIN_PULL = 125
 var speed = 400
 var velocity = Vector2()
 var gravity = 50
-var jumpForce = -800
+var jumpForce = -1000
 var holdtimer = 0
 
 var canShoot = true

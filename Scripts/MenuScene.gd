@@ -43,7 +43,7 @@ func _on_PlayButton_pressed():
 func _on_SettingsButton_pressed():
 	in_menu = false
 	$SettingsAnim.play("switch")
-	$BG/ElementsContainer/SettingsRect/ButtonsContainer/BackButton.grab_focus()
+	$BG/ElementsContainer/Section2/SettingsRect/ButtonsContainer/BackButton.grab_focus()
 
 func _on_Quit_pressed():
 	get_tree().quit()
@@ -57,7 +57,7 @@ func _on_FadeOutAnim_animation_finished(anim_name):
 func _on_BackButton_pressed():
 	in_menu = true
 	$SettingsAnim.play_backwards("switch")
-	$BG/ElementsContainer/Buttons/ButtonsContainer/SettingsButton.grab_focus()
+	$BG/ElementsContainer/Section1/Buttons/ButtonsContainer/SettingsButton.grab_focus()
 
 
 func _on_FullScreenButton_pressed():
@@ -73,3 +73,14 @@ func _on_VolumeSlider_drag_ended(value_changed):
 func _on_MusicSlider_drag_ended(value_changed):
 	var MusicSlider = $BG/ElementsContainer/SettingsRect/ButtonsContainer/MusicSlider
 	AudioServer.set_bus_volume_db(1, MusicSlider.value)
+
+
+
+func _on_Button_mouse_entered(btn_index):
+	var selected_button = $BG/ElementsContainer/Section1/Buttons/ButtonsContainer.get_child(btn_index)
+	selected_button.get_node('Label').show()
+
+
+func _on_Button_mouse_exited(btn_index):
+	var selected_button = $BG/ElementsContainer/Section1/Buttons/ButtonsContainer.get_child(btn_index)
+	selected_button.get_node('Label').hide()
